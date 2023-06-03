@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "username": "aa",
+      "password": "123",
+      "id": 1
+    },
+    {
+      "username": "asd",
+      "password": "1124",
+      "id": 2
+    },
+    {
+      "email": "jealuigueher@gmail.com",
+      "fullName": "Jean luis",
+      "address": "siloe",
+      "phoneNumber": "3164596762",
+      "password": "sisoygay",
+      "id": 3
+    },
+    {
+      "email": "jealuigueher8@gmail.com",
+      "fullName": "kk",
+      "address": "kk city",
+      "phoneNumber": "1234567",
+      "password": "kkk",
+      "id": 4
+    },
+    {
+      "email": "jealuigueher81@gmail.com",
+      "fullName": "Jean luisKK",
+      "address": "siloe CT",
+      "phoneNumber": "3164596763",
+      "password": "123456",
+      "id": 5
+    },
+    {
+      "email": "jealuigueher23@gmail.com",
+      "fullName": "Jean luis1",
+      "address": "siloe1",
+      "phoneNumber": "3164596761",
+      "password": "123451",
+      "id": 6
+    }
+  ]
+}
