@@ -26,7 +26,7 @@ const LoginPage = () => {
     };
 
     try {
-      const response = await axios.get("http://localhost:5000/customers");
+      const response = await axios.get("http://104.154.62.201:5000/customers");
       const customers = response.data;
       const user = customers.find(
         (customer) => customer.email === email && customer.password === password

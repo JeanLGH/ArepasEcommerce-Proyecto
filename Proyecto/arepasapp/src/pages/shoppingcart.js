@@ -21,8 +21,8 @@ const ShoppingCart = () => {
   const fetchData = async () => {
     try {
       const [orderItemsResponse, productDataResponse] = await Promise.all([
-        axios.get("http://localhost:5000/orderitems"),
-        axios.get("http://localhost:5000/products"),
+        axios.get("http://104.154.62.201:5000/orderitems"),
+        axios.get("http://104.154.62.201:5000/products"),
       ]);
       if (orderItemsResponse.data.length === 0) {
         // El carrito está vacío, muestra un mensaje
@@ -47,7 +47,7 @@ const ShoppingCart = () => {
   const deleteOrder = async(id) =>{
     let isDelete= window.confirm("¿Seguro que desea eliminar el producto?");
     if (isDelete){
-      await axios.delete(`http://localhost:5000/orderitems/${id}`);
+      await axios.delete(`http://104.154.62.201:5000/orderitems/${id}`);
       fetchData();
     }
   };
@@ -77,7 +77,7 @@ const ShoppingCart = () => {
     };
   
     try {
-      await axios.put(`http://localhost:5000/orderitems/${orderItemId}`, updatedOrderItem);
+      await axios.put(`http://104.154.62.201:5000/orderitems/${orderItemId}`, updatedOrderItem);
   
       setOrderItems((prevOrderItems) => {
         const updatedItems = [...prevOrderItems];
@@ -102,7 +102,7 @@ const ShoppingCart = () => {
       };
   
       try {
-        await axios.put(`http://localhost:5000/orderitems/${orderItemId}`, updatedOrderItem);
+        await axios.put(`http://104.154.62.201:5000/orderitems/${orderItemId}`, updatedOrderItem);
   
         setOrderItems((prevOrderItems) => {
           const updatedItems = [...prevOrderItems];

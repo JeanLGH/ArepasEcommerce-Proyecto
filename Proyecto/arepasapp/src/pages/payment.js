@@ -26,7 +26,7 @@ const Payment = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/customers", {
+        const response = await axios.get("http://104.154.62.201:5000/customers", {
           params: {
             email: username,
           },
@@ -58,8 +58,8 @@ const Payment = () => {
     const fetchData = async () => {
       try {
         const [orderItemsResponse, productDataResponse] = await Promise.all([
-          axios.get("http://localhost:5000/orderitems"),
-          axios.get("http://localhost:5000/products"),
+          axios.get("http://104.154.62.201:5000/orderitems"),
+          axios.get("http://104.154.62.201:5000/products"),
         ]);
         setOrderItems(orderItemsResponse.data);
         setProductData(productDataResponse.data);
@@ -102,7 +102,7 @@ const Payment = () => {
 
   const sendOrderFinal = async (orderFinalData) => {
     try {
-      const response = await axios.post("http://localhost:5000/orderfinal", orderFinalData);
+      const response = await axios.post("http://104.154.62.201:5000/orderfinal", orderFinalData);
       console.log("Datos de orderFinal enviados:", response.data);
     } catch (error) {
       console.error("Error al enviar los datos de orderFinal:", error);
@@ -120,7 +120,7 @@ const Payment = () => {
       notes: notes,
     };
     try {
-      const response = await axios.post("http://localhost:5000/orders", orderData);
+      const response = await axios.post("http://104.154.62.201:5000/orders", orderData);
       console.log("Pedido enviado:", response.data);
   
       setOrderDetails(response.data); // Guardar los datos del pedido en el estado
@@ -129,7 +129,7 @@ const Payment = () => {
       setNotes("");
   
       // Enviar datos de orderFinal
-      const productsResponse = await axios.get('http://localhost:5000/orderitems');
+      const productsResponse = await axios.get('http://104.154.62.201:5000/orderitems');
       const productsData = productsResponse.data;
   
       // Calcular el subtotal
@@ -160,7 +160,7 @@ const Payment = () => {
     try {
       // Eliminar los elementos del carrito uno por uno
       for (const orderItem of orderItems) {
-        await axios.delete(`http://localhost:5000/orderitems/${orderItem.id}`);
+        await axios.delete(`http://104.154.62.201:5000/orderitems/${orderItem.id}`);
       }
       // Vaciar el estado del carrito de compras
       setOrderItems([]);

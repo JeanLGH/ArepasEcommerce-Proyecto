@@ -27,7 +27,7 @@ const Register = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/customers", formData);
+      await axios.post("http://104.154.62.201:5000/customers", formData);
 
       setEmail("");
       setFullName("");
