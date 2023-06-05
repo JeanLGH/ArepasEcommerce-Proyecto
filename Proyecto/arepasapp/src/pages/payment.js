@@ -111,6 +111,10 @@ const Payment = () => {
   };
 
   const handleSubmit = async () => {
+    const isFormValid = validateForm();
+    if (!isFormValid) {
+      return;
+    }
     const orderData = {
       id: orderId,
       fullName: username ? userData.fullName : guestData.fullName,
@@ -154,6 +158,40 @@ const Payment = () => {
       console.error("Error al enviar el pedido:", error);
       // Manejar el error adecuadamente
     }
+  };
+  const validateForm = () => {
+    // Validar los campos requeridos y mostrar mensajes de error si es necesario
+    let isFormValid = true;
+
+    if (!username && !guestData.fullName) {
+      // Si no hay un usuario registrado y no se ha ingresado el nombre completo del invitado
+      isFormValid = false;
+      // Mostrar mensaje de error o realizar alguna acción para indicar que el campo es obligatorio
+      window.alert("El nombre completo es obligatorio");
+    }
+
+    if (!username && !guestData.address) {
+      // Si no hay un usuario registrado y no se ha ingresado la dirección del invitado
+      isFormValid = false;
+      // Mostrar mensaje de error o realizar alguna acción para indicar que el campo es obligatorio
+      window.alert("La dirección es obligatoria");
+    }
+
+    if (!username && !guestData.phoneNumber) {
+      // Si no hay un usuario registrado y no se ha ingresado el número de teléfono del invitado
+      isFormValid = false;
+      // Mostrar mensaje de error o realizar alguna acción para indicar que el campo es obligatorio
+      window.alert("El número de teléfono es obligatorio");
+    }
+
+    if (!notes) { 
+      // Si no se ha ingresado ninguna nota adicional
+      isFormValid = false;
+      // Mostrar mensaje de error o realizar alguna acción para indicar que el campo es obligatorio
+      window.alert("Las notas son obligatorias");
+    }
+
+    return isFormValid;
   };
 
   const handleReturnHome = async () => {
@@ -265,7 +303,8 @@ const Payment = () => {
                           <textarea className="form-control" id="notes" value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                             placeholder="Ingrese cualquier nota adicional para su pedido"
-                          required></textarea>
+                            required
+                          ></textarea>
                         </div>
                       </div>
                     </Container>
@@ -280,12 +319,12 @@ const Payment = () => {
                     <Form className="row g-3">
                       <Col md={6}>
                         <Form.Label htmlFor="fullName" className="form-label">Nombre Completo</Form.Label>
-                        <Form.Control type="text" id="fullName"placeholder="Nombre completo" value={username ? userData.fullName : guestData.fullName}
+                        <Form.Control type="text" id="fullName"placeholder="Nombre completo"  value={username ? userData.fullName : guestData.fullName}
                           onChange={(e) =>
                             username
                               ? setUserData({ ...userData, fullName: e.target.value })
                               : setGuestData({ ...guestData, fullName: e.target.value })
-                          }required
+                          }
                         />
                       </Col>
                       <Col md={6}>
