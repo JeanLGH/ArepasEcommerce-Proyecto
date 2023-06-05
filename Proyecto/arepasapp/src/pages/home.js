@@ -11,13 +11,9 @@ const Home = () => {
   const productsPerPage = 3;
 
   useEffect(() => {
-    axios.get("http://localhost:5000/products")
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los productos:", error);
-      });
+    axios.get("http://34.132.237.34:5000/products")
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Error al obtener los productos:", error));
   }, []);
   
 
