@@ -9,7 +9,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-
 const ShoppingCart = () => {
   const location = useLocation();
   const { username } = location.state || {};
@@ -17,6 +16,8 @@ const ShoppingCart = () => {
   const [productData, setProductData] = useState([]);
   const [counters, setCounters] = useState([0, 0, 0]); // Estado de los contadores
   const [message, setMessage] = useState(""); // Estado del mensaje
+  const [isCartEmpty, setIsCartEmpty] = useState(false);
+
 
   const fetchData = async () => {
     try {
@@ -25,30 +26,48 @@ const ShoppingCart = () => {
         axios.get("http://34.132.237.34:5000/products"),
       ]);
       if (orderItemsResponse.data.length === 0) {
+        setOrderItems(orderItemsResponse.data);
+        setProductData(productDataResponse.data);
+        setIsCartEmpty(true); // Carrito vacío
         // El carrito está vacío, muestra un mensaje
         setMessage("El carrito está vacío");
-        
-      }else{
+      } else {
         setOrderItems(orderItemsResponse.data);
         setProductData(productDataResponse.data);
       }
-      
-
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    
     fetchData();
   }, []);
 
-  const deleteOrder = async(id) =>{
-    let isDelete= window.confirm("¿Seguro que desea eliminar el producto?");
-    if (isDelete){
+  const deleteOrder = async (id) => {
+    let isDelete = window.confirm("¿Seguro que desea eliminar el producto?");
+
+    if (isDelete) {
       await axios.delete(`http://34.132.237.34:5000/orderitems/${id}`);
       fetchData();
+    }
+  };
+
+  const emptyCart = async () => {
+    let isDelete = window.confirm("¿Seguro que desea vaciar el carrito?");
+
+    if (isDelete) {
+      try {
+        const orderItemIds = orderItems.map((orderItem) => orderItem.id);
+        await Promise.all(
+          orderItemIds.map((orderId) =>
+            axios.delete(`http://34.132.237.34:5000/orderitems/${orderId}`)
+          )
+        );
+        fetchData();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -66,6 +85,7 @@ const ShoppingCart = () => {
 
     return totalPrice;
   };
+
 
   //botones de añadir
   // Función para incrementar el contador especificado por el índice
@@ -174,6 +194,7 @@ const ShoppingCart = () => {
                       
                       <Row>
                         <Col>
+                          {" "}
                           <div className="counter-group-card">
                             <strong>${product.price}</strong>{"   "}
                             <Button variant="outline-dark" onClick={() => decrementCounter(index)}
@@ -201,6 +222,7 @@ const ShoppingCart = () => {
               </Card>
             );
           })}
+          
         </Col>
         <Col sm={6}>
           <Card>
@@ -250,7 +272,10 @@ const ShoppingCart = () => {
           {"  "}        
           <div className="d-grid gap-2 d-md-flex justify-content-md-end">
           <br />
-            <Link to="/payment" className="btn btn-success" style={{ color: "white" }} state={{ username }} >
+          <Button variant="danger" onClick={emptyCart}>
+            Vaciar Carrito
+          </Button>
+            <Link to={isCartEmpty ? "#" : "/payment"} className={`btn btn-success ${isCartEmpty ? "disabled" : ""}`} style={{ color: "white" }} state={{ username }} >
               <h6>
                 IR A PAGAR {"  "}
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" className="bi bi-receipt-cutoff" viewBox="0 0 16 16" >
