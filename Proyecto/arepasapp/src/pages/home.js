@@ -11,7 +11,7 @@ const Home = () => {
   const productsPerPage = 3;
 
   useEffect(() => {
-    fetch("http://104.154.62.201:5000/products")
+    fetch("http://34.132.237.34:5000/products")
       .then((response) => response.json())
       .then((data) => setProducts(data));
   }, []);
@@ -51,14 +51,14 @@ const Home = () => {
 
   try {
     const response = await axios.get(
-      `http://104.154.62.201:5000/orderitems?id=${orderId}`
+      `http://34.132.237.34:5000/orderitems?id=${orderId}`
     );
 
     if (response.data.length > 0) {
       const orderItem = response.data[0];
       orderItem.qty += 1; // Incrementar la cantidad del producto en el servidor
       await axios.put(
-        `http://104.154.62.201:5000/orderitems/${orderItem.id}`,
+        `http://34.132.237.34:5000/orderitems/${orderItem.id}`,
         orderItem
       );
     } else {
@@ -68,7 +68,7 @@ const Home = () => {
         price: product.price,
         qty: 1 // Inicializar la cantidad en 1
       };
-      await axios.post("http://104.154.62.201:5000/orderitems", order); // Crear un nuevo objeto de pedido en el servidor
+      await axios.post("http://34.132.237.34:5000/orderitems", order); // Crear un nuevo objeto de pedido en el servidor
     }
   } catch (error) {
     console.error("Error al incrementar la cantidad del producto:", error);
@@ -87,7 +87,7 @@ const decrementCounter = async (index) => {
 
     try {
       const response = await axios.get(
-        `http://104.154.62.201:5000/orderitems?id=${orderId}`
+        `http://34.132.237.34:5000/orderitems?id=${orderId}`
       );
 
       if (response.data.length > 0) {
@@ -95,7 +95,7 @@ const decrementCounter = async (index) => {
         if (orderItem.qty > 0) {
           orderItem.qty -= 1; // Actualizar la cantidad del producto en el servidor
           await axios.put(
-            `http://104.154.62.201:5000/orderitems/${orderItem.id}`,
+            `http://34.132.237.34:5000/orderitems/${orderItem.id}`,
             orderItem
           );
         }
@@ -116,10 +116,10 @@ const addItem = async (a, b, c, index) => { // Agrega el parámetro `index`
   const quantity = counters[index]; // Obtén la cantidad del producto del array counters
 
   let isExisting = false;
-  const result = await axios.get("http://104.154.62.201:5000/orderitems");
+  const result = await axios.get("http://34.132.237.34:5000/orderitems");
   if (result.data.length === 0) {
     const order = { id: a, name: b, price: c, qty: quantity };
-    axios.post("http://104.154.62.201:5000/orderitems", order);
+    axios.post("http://34.132.237.34:5000/orderitems", order);
   } else {
     result.data.forEach((orderItem) => {
       if (a === orderItem.id) {
@@ -130,7 +130,7 @@ const addItem = async (a, b, c, index) => { // Agrega el parámetro `index`
           price: c,
           qty: orderItem.qty,
         };
-        axios.put(`http://104.154.62.201:5000/orderitems/${orderItem.id}`, order);
+        axios.put(`http://34.132.237.34:5000/orderitems/${orderItem.id}`, order);
         isExisting = true;
       }
     });
@@ -141,7 +141,7 @@ const addItem = async (a, b, c, index) => { // Agrega el parámetro `index`
         price: c,
         qty: quantity, // Usar la cantidad del producto del array counters
       };
-      axios.post("http://104.154.62.201:5000/orderitems", order);
+      axios.post("http://34.132.237.34:5000/orderitems", order);
     }
   }
 };
