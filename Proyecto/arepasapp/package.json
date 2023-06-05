@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"json-server -H 34.132.237.34 -p 5000 JDATA.json\" \"react-scripts start\"",
+    "start": "concurrently \"json-server -H  0.0.0.0 -p 5000 JDATA.json\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
